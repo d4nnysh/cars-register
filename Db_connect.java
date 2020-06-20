@@ -5,7 +5,7 @@ import java.io.*;
 public class Db_connect {
     private Connection con= null;
     private ArrayList<Driver> kierowcy= new ArrayList<Driver>();
-    public static final String DB_NAME="cars-register";
+    public static final String DB_NAME="cars-register.db";
 
     public Db_connect(){
         File db= new File(DB_NAME);
