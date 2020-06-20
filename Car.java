@@ -6,7 +6,7 @@ public class Car {
     private int przebieg;
     public Car(String rejestracja, String marka, String model, int rok, int przebieg){
         this.rejestracja=rejestracja;
-        this.marka=marks;
+        this.marka=marka;
         this.model=model;
         this.rok=rok;
         this.przebieg=przebieg;

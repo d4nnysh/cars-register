@@ -4,17 +4,17 @@ public class Driver {
     private long pesel;
     private String imie;
     private String nazwisko;
-    private ArrayList<Car> cars= new ArrayList<>();
+    private ArrayList<Car> samochody= new ArrayList<Car>();
     public Driver(long pesel, String imie, String nazwisko){
         this.pesel=pesel;
         this.imie=imie;
         this.nazwisko=nazwisko;
     }
     public void addCar(Car c){
-        cars.add(c);
+        samochody.add(c);
     }
     public ArrayList<Car> getCars() {
-        return cars;
+        return samochody;
     }
     public String getImie() {
         return imie;
@@ -26,7 +26,7 @@ public class Driver {
         return pesel;
     }
     public void setCars(ArrayList<Car> cars) {
-        this.cars = cars;
+        this.samochody = cars;
     }
     public void setImie(String imie) {
         this.imie = imie;
