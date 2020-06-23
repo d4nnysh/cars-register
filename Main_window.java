@@ -66,7 +66,7 @@ public class Main_window extends JFrame implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         
         if(e.getSource()==samochody){
-
+            Cars_window cw= new Cars_window(d);
         }
         else if(e.getSource()==kierowcy){
 
@@ -75,7 +75,6 @@ public class Main_window extends JFrame implements ActionListener{
             System.exit(0);
         }
     }
-
     public static void main(String[] args) {
         Main_window mw= new Main_window(); 
     }

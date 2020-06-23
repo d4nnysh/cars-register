@@ -107,6 +107,28 @@ public class Db_connect {
         return (double)s/k;
 
     }
+    public ArrayList<Car> getCarsList() throws SQLException{
+        ArrayList<Car> samochody= new ArrayList<Car>();
+        stmt=con.createStatement();
+        query="SELECT * FROM cars;";
+        rs=stmt.executeQuery(query);
+        while(rs.next()){
+            samochody.add(new Car(rs.getString("rejestracja"), rs.getString("marka"), rs.getString("model"), rs.getInt("rok"), rs.getInt("przebieg")));
+        }
+        stmt.close();
+        return samochody;
+    }
+    public ArrayList<Driver> getDriversList() throws SQLException{
+        ArrayList<Driver> kierowcy= new ArrayList<Driver>();
+        stmt=con.createStatement();
+        query="SELECT * FROM drivers;";
+        rs=stmt.executeQuery(query);
+        while(rs.next()){
+            kierowcy.add(new Driver(rs.getLong("pesel"), rs.getString("imie"), rs.getString("nazwisko")));
+        }
+        stmt.close();
+        return kierowcy;
+    }
     
 
 

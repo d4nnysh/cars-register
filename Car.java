@@ -41,5 +41,10 @@ public class Car {
     public void setRok(int rok) {
         this.rok = rok;
     }
+    @Override
+    public String toString() {
+        // TODO Auto-generated method stub
+        return rejestracja+" "+marka+" "+model;
+    }
 
 }

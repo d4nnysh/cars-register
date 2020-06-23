@@ -10,9 +10,6 @@ public class Driver {
         this.imie=imie;
         this.nazwisko=nazwisko;
     }
-    public void addCar(Car c){
-        samochody.add(c);
-    }
     public ArrayList<Car> getCars() {
         return samochody;
     }
@@ -36,6 +33,10 @@ public class Driver {
     }
     public void setPesel(long pesel) {
         this.pesel = pesel;
+    }
+    @Override
+    public String toString() {
+        return imie+" "+nazwisko+" "+pesel;
     }
 
 
