@@ -5,7 +5,8 @@ import javax.swing.*;
 
 public class Main_window extends JFrame implements ActionListener{
     private JButton kierowcy, samochody, wyjscie;            
-    private JLabel stat, avgW, avgP, maxW, maxP, avgSpK;   
+    private JLabel stat, avgW, avgP, maxW, maxP, avgSpK; 
+    private JPanel panel, right_panel, center_panel;  
     private Db_connect d;   
     
     public Main_window(){
@@ -31,9 +32,9 @@ public class Main_window extends JFrame implements ActionListener{
             samochody.addActionListener(this);
             wyjscie.addActionListener(this);
             
-            JPanel panel = new JPanel();
-            JPanel right_panel = new JPanel();
-            JPanel center_panel = new JPanel();
+            panel = new JPanel();
+            right_panel = new JPanel();
+            center_panel = new JPanel();
 
             panel.setLayout(new BorderLayout());
             right_panel.setLayout(new GridLayout(0,1));
@@ -53,8 +54,7 @@ public class Main_window extends JFrame implements ActionListener{
             panel.add(wyjscie, BorderLayout.SOUTH);
             panel.add(right_panel, BorderLayout.EAST);
 
-            getContentPane().add(panel);
-            
+            getContentPane().add(panel);            
             setVisible(true);
         } catch (Exception e) {
             e.printStackTrace();
