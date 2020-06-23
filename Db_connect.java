@@ -19,12 +19,6 @@ public class Db_connect {
         }
         try {
             connect();
-            System.out.println("MIN przebieg "+ minPrzebieg());
-            System.out.println("MAX wiek "+ maxWiek());
-            System.out.println("AVG wiek "+ avgWiek());
-            System.out.println("AVG przebieg "+ avgPrzebieg());
-
-
             
         } catch (Exception e) {
             e.printStackTrace();
@@ -97,16 +91,20 @@ public class Db_connect {
 
     }
     public double avgCarsPerDriver() throws SQLException{
-        double w=LocalDate.now().getYear();
+        int k=0, s=0;
         stmt=con.createStatement();
-        query="SELECT AVG(rejestracja) FROM cars sort by ;";
+        query="SELECT COUNT(pesel) FROM drivers;";
         rs=stmt.executeQuery(query);
         while(rs.next()){
-            w=rs.getDouble("AVG(rok)");
-
+            k=rs.getInt("COUNT(pesel)");
+        }
+        query="SELECT COUNT(rejestracja) FROM cars;";
+        rs=stmt.executeQuery(query);
+        while(rs.next()){
+            s=rs.getInt("COUNT(rejestracja)");
         }
         stmt.close();
-        return (double)LocalDate.now().getYear()-w;
+        return (double)s/k;
 
     }
     

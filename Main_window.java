@@ -1,8 +1,82 @@
-import javax.swing.JFrame;
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
+import java.awt.event.*;
+import javax.swing.*;
 
-public class Main_window extends JFrame {
+public class Main_window extends JFrame implements ActionListener{
+    private JButton kierowcy, samochody, wyjscie;            
+    private JLabel stat, avgW, avgP, maxW, maxP, avgSpK;   
+    private Db_connect d;   
     
+    public Main_window(){
+        try {
+            d= new Db_connect();
+            setBounds(100, 20, 1200, 800);
+            setTitle("Cars register");        
+            setResizable(false);
+            setLocationRelativeTo(null);
+            setDefaultCloseOperation(EXIT_ON_CLOSE);
+
+            stat=new JLabel("Statystyki");
+            avgW=new JLabel("Sredni wiek pojazdu: "+d.avgWiek() +" lat");
+            avgP=new JLabel("Sredni przebieg pojazdu: "+d.avgPrzebieg()+ " km");
+            maxW=new JLabel("Najstarszy pojazd : "+d.maxWiek()+ " lat");
+            maxP=new JLabel("Najwiekszy przebieg pojazdu: "+d.avgPrzebieg()+" km");
+            avgSpK=new JLabel("Srednio pojazdow na kierowce: "+d.avgCarsPerDriver());
+
+            kierowcy=new JButton("Menu kierowcow");
+            samochody=new JButton("Menu samochodow");
+            wyjscie=new JButton("Wyjscie");
+            kierowcy.addActionListener(this);
+            samochody.addActionListener(this);
+            wyjscie.addActionListener(this);
+            
+            JPanel panel = new JPanel();
+            JPanel right_panel = new JPanel();
+            JPanel center_panel = new JPanel();
+
+            panel.setLayout(new BorderLayout());
+            right_panel.setLayout(new GridLayout(0,1));
+            center_panel.setLayout(new GridLayout(0,1));
+
+            center_panel.add(kierowcy);
+            center_panel.add(samochody);
+            
+            right_panel.add(stat);
+            right_panel.add(avgW);
+            right_panel.add(avgP);
+            right_panel.add(maxW);
+            right_panel.add(maxP);
+            right_panel.add(avgSpK);
+
+            panel.add(center_panel, BorderLayout.CENTER);
+            panel.add(wyjscie, BorderLayout.SOUTH);
+            panel.add(right_panel, BorderLayout.EAST);
+
+            getContentPane().add(panel);
+            
+            setVisible(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.exit(0);
+        }
+        
+    }
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        
+        if(e.getSource()==samochody){
+
+        }
+        else if(e.getSource()==kierowcy){
+
+        }
+        else{
+            System.exit(0);
+        }
+    }
+
     public static void main(String[] args) {
-        Db_connect d= new Db_connect();
+        Main_window mw= new Main_window(); 
     }
 }
