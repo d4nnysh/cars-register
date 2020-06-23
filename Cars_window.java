@@ -11,8 +11,11 @@ import javax.swing.*;
 public class Cars_window extends JFrame implements ActionListener{
     private Db_connect d;
     private ArrayList<Car> samochody;
-    private JPanel panel, top_panel;
-    private JButton wroc;
+    private JPanel panel, top_panel, center_panel;
+    private JScrollPane scroll;
+    private JButton wroc, szukaj, dodaj;
+    private JLabel wpisz= new JLabel("Wpisz rejestracje");
+    private JTextField rejestracja= new JTextField("xxxxxx");
 
     public Cars_window(Db_connect d){
         this.d=d;
@@ -26,18 +29,35 @@ public class Cars_window extends JFrame implements ActionListener{
             samochody.sort(Comparator.comparing(Car::getRejestracja));
             panel = new JPanel();
             top_panel = new JPanel();
-            JPanel center_panel= new JPanel();
+            center_panel= new JPanel();
+
             center_panel.setLayout(new GridLayout(0,1));
             panel.setLayout(new BorderLayout());
 
             wroc= new JButton("Wroc");
+            szukaj= new JButton("Szukaj");
+            dodaj= new JButton("Dodaj samochod");
             wroc.addActionListener(this);
+            szukaj.addActionListener(this);
+            dodaj.addActionListener(this);
 
-            panel.add(wroc, BorderLayout.SOUTH);
+            
             samochody.forEach(x -> center_panel.add(new Car_cart(x)));
-            JScrollPane scroll= new JScrollPane(center_panel);
+            for (Car car : samochody) {
+                center_panel.add(new Car_cart(car));
+                center_panel.add(new JSeparator());
+            }
+            scroll= new JScrollPane(center_panel);
 
+            
+            top_panel.add(wpisz);
+            top_panel.add(rejestracja);
+            top_panel.add(szukaj);
+            top_panel.add(dodaj);
+            
+            panel.add(wroc, BorderLayout.SOUTH);
             panel.add(scroll, BorderLayout.CENTER);
+            panel.add(top_panel, BorderLayout.NORTH);
 
             getContentPane().add(panel);            
             setVisible(true);
@@ -56,6 +76,9 @@ public class Cars_window extends JFrame implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         if(e.getSource()==wroc){
             setVisible(false);
+        }
+        else if(e.getSource()==szukaj){
+            
         }
        
     }
