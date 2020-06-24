@@ -150,6 +150,17 @@ public class Db_connect {
         con.commit();
         stmt.close();
     }
+    public int liczbaSamochodow(long pesel) throws SQLException{
+        int x=0;
+        stmt=con.createStatement();
+        query="SELECT COUNT(rejestracja) FROM owns WHERE pesel='"+pesel+"';";
+        rs=stmt.executeQuery(query);
+        while(rs.next()){
+           x=rs.getInt("COUNT(rejestracja)");
+        }
+        stmt.close();
+        return x;
+    }
     public Car findCar(String rej) throws SQLException{
         Car c=null;
         stmt=con.createStatement();
@@ -160,6 +171,17 @@ public class Db_connect {
         }
         stmt.close();
         return c;
+    }    
+    public Driver findDriver(long pesel) throws SQLException{
+        Driver d=null;
+        stmt=con.createStatement();
+        query="SELECT * FROM drivers WHERE pesel='"+pesel+"';";
+        rs=stmt.executeQuery(query);
+        while(rs.next()){
+           d=new Driver(rs.getLong("pesel"), rs.getString("imie"), rs.getString("nazwisko"));
+        }
+        stmt.close();
+        return d;
     }
     
     

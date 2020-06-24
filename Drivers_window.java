@@ -26,7 +26,7 @@ public class Drivers_window extends JFrame implements ActionListener{
             setLocationRelativeTo(null);
             setDefaultCloseOperation(DISPOSE_ON_CLOSE);
             kierowcy=d.getDriversList();
-            kierowcy.sort(Comparator.comparing(Driver::getPesel));
+            kierowcy.sort(Comparator.comparing(Driver::getNazwisko));
             panel = new JPanel();
             top_panel = new JPanel();
             center_panel= new JPanel();
@@ -46,9 +46,9 @@ public class Drivers_window extends JFrame implements ActionListener{
             odswiez.addActionListener(this);
 
 
-            kierowcy.forEach(x -> center_panel.add(new Driver_cart(x)));
+            kierowcy.forEach(x -> center_panel.add(new Driver_cart(x, d)));
             for (Driver driver : kierowcy) {
-                center_panel.add(new Driver_cart(driver));
+                center_panel.add(new Driver_cart(driver, d));
                 center_panel.add(new JSeparator());
             }
             scroll= new JScrollPane(center_panel);
@@ -84,10 +84,12 @@ public class Drivers_window extends JFrame implements ActionListener{
                 setVisible(false);
             }
             else if(e.getSource()==szukaj){
-                
+                if(d.findDriver(Long.parseLong(pesel.getText()))!=null){
+                    Edit_driver ec= new Edit_driver(d, d.findDriver(Long.parseLong(pesel.getText())));
+                }
             }
             else if(e.getSource()==dodaj){
-                
+                Edit_driver ed= new Edit_driver(d);
             }
             else if(e.getSource()==odswiez){
                 Drivers_window dw= new Drivers_window(d);
@@ -99,24 +101,26 @@ public class Drivers_window extends JFrame implements ActionListener{
         
     }
     class Driver_cart extends JPanel implements ActionListener{
-        private JLabel rejestracja, marka, model, rok, przebieg; 
+        private JLabel pesel, imie, nazwisko, l_samochodow; 
         private JButton edytuj= new JButton("Edytuj");
         private Driver d;
 
         
-        public Driver_cart(Driver d){
+        public Driver_cart(Driver d, Db_connect db){
             this.d=d;
-            // rejestracja=new JLabel("Rejestracja: "+s.getRejestracja());
-            // marka=new JLabel("Marka: "+s.getMarka());
-            // model=new JLabel("Model: "+s.getModel());
-            // rok=new JLabel("Rok: "+s.getRok());
-            // przebieg=new JLabel("Przebieg: "+s.getPrzebieg());
+            pesel=new JLabel("PESEL: "+d.getPesel());
+            imie=new JLabel("Imie: "+d.getImie());
+            nazwisko=new JLabel("Nazwisko: "+d.getNazwisko());
+            try {
+                l_samochodow=new JLabel("Liczba pojazdow: "+db.liczbaSamochodow(d.getPesel()));
+            } catch (Exception e) {
+                l_samochodow=new JLabel("Liczba pojazdow: 0");
+            }
             this.setLayout(new GridLayout(1,0));
-            // this.add(rejestracja);
-            // this.add(marka);
-            // this.add(model);
-            // this.add(rok);
-            // this.add(przebieg);
+            this.add(pesel);
+            this.add(imie);
+            this.add(nazwisko);
+            this.add(l_samochodow);
             this.add(edytuj);
             edytuj.addActionListener(this);
         }
