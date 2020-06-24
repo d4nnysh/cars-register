@@ -129,6 +129,32 @@ public class Db_connect {
         stmt.close();
         return kierowcy;
     }
+    public void addSamochod(Car c) throws SQLException{
+        stmt=con.createStatement();
+        query="INSERT INTO cars VALUES ('"+c.getRejestracja()+"', '"+c.getMarka()+"', '"+c.getModel()+"', '"+c.getRok()+"', '"+c.getPrzebieg()+"');";
+        stmt.executeUpdate(query);
+        con.commit();
+        stmt.close();
+    }
+    public void editSamochod(Car c) throws SQLException{
+        stmt=con.createStatement();
+        query="UPDATE cars SET marka='"+c.getMarka()+"', model='"+c.getModel()+"', rok='"+c.getRok()+"', przebieg='"+c.getPrzebieg()+"' WHERE rejestracja='"+c.getRejestracja()+"';";
+        stmt.executeUpdate(query);
+        con.commit();
+        stmt.close();
+
+    }
+    public void deleteSamochod(Car c) throws SQLException{
+        stmt=con.createStatement();
+        query="DELETE FROM cars WHERE rejestracja='"+c.getRejestracja()+"';";
+        stmt.executeUpdate(query);
+        con.commit();
+        query="DELETE FROM owns WHERE rejestracja='"+c.getRejestracja()+"';";
+        stmt.executeUpdate(query);
+        con.commit();
+        stmt.close();
+    }
+    
     
 
 

@@ -1,14 +1,20 @@
 import javax.swing.*;
 import java.awt.event.*;
+import java.awt.GridLayout;
+
 public class Edit_car extends JFrame implements ActionListener{
     private Db_connect d;
+    private Car s;
     private JLabel rejestracja, marka, model, rok, przebieg; 
     private JTextField wpiszRe, wpiszMa, wpiszMo, wpiszRo, wpiszP; 
     private JButton wroc, edytuj, usun;
     private JPanel panel= new JPanel();
+    private boolean nowySamochod=false;
 
 
     public Edit_car(Db_connect d, Car s){
+        this.d=d;
+        this.s=s;
         createWindow();
         wpiszRe.setEditable(false);
         wpiszRe.setText(s.getRejestracja());
@@ -20,10 +26,11 @@ public class Edit_car extends JFrame implements ActionListener{
 
     }
     public Edit_car(Db_connect d){
-
+        this.d=d;
         createWindow();
         edytuj.setText("Dodaj");
         usun.setVisible(false);
+        nowySamochod=true;
         
     }
     public void createWindow(){
@@ -45,6 +52,10 @@ public class Edit_car extends JFrame implements ActionListener{
         wpiszMo= new JTextField();
         wpiszRo= new JTextField();
         wpiszP= new JTextField();
+        edytuj.addActionListener(this);
+        wroc.addActionListener(this);
+        usun.addActionListener(this);
+        panel.setLayout(new GridLayout(0,2));
 
         panel.add(rejestracja);
         panel.add(wpiszRe);
@@ -67,5 +78,30 @@ public class Edit_car extends JFrame implements ActionListener{
     }
     @Override
     public void actionPerformed(ActionEvent e) {
+        try {
+            if(e.getSource()==edytuj){
+                if(nowySamochod){
+                    d.addSamochod(new Car(wpiszRe.getText(), wpiszMa.getText(), wpiszMo.getText(), Integer.parseInt(wpiszRo.getText()), Integer.parseInt(wpiszP.getText())));
+                    setVisible(false);
+                }
+                else{
+                    d.editSamochod(new Car(wpiszRe.getText(), wpiszMa.getText(), wpiszMo.getText(), Integer.parseInt(wpiszRo.getText()), Integer.parseInt(wpiszP.getText())));
+                    setVisible(false);
+                }
+            }
+            else if(e.getSource()==usun){                
+                d.deleteSamochod(s);
+                setVisible(false);
+            
+            }
+        } catch (Exception x) {
+            x.printStackTrace();
+            System.exit(0);
+        }
+        
+        if(e.getSource()==wroc){
+            setVisible(false);
+        }
+
     }
 }
