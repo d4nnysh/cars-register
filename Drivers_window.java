@@ -46,9 +46,9 @@ public class Drivers_window extends JFrame implements ActionListener{
             odswiez.addActionListener(this);
 
 
-            kierowcy.forEach(x -> center_panel.add(new Driver_cart(x, d)));
+            kierowcy.forEach(x -> center_panel.add(new Driver_cart(x)));
             for (Driver driver : kierowcy) {
-                center_panel.add(new Driver_cart(driver, d));
+                center_panel.add(new Driver_cart(driver));
                 center_panel.add(new JSeparator());
             }
             scroll= new JScrollPane(center_panel);
@@ -103,16 +103,16 @@ public class Drivers_window extends JFrame implements ActionListener{
     class Driver_cart extends JPanel implements ActionListener{
         private JLabel pesel, imie, nazwisko, l_samochodow; 
         private JButton edytuj= new JButton("Edytuj");
-        private Driver d;
+        private Driver k;
 
         
-        public Driver_cart(Driver d, Db_connect db){
-            this.d=d;
-            pesel=new JLabel("PESEL: "+d.getPesel());
-            imie=new JLabel("Imie: "+d.getImie());
-            nazwisko=new JLabel("Nazwisko: "+d.getNazwisko());
+        public Driver_cart(Driver k){
+            this.k=k;
+            pesel=new JLabel("PESEL: "+k.getPesel());
+            imie=new JLabel("Imie: "+k.getImie());
+            nazwisko=new JLabel("Nazwisko: "+k.getNazwisko());
             try {
-                l_samochodow=new JLabel("Liczba pojazdow: "+db.liczbaSamochodow(d.getPesel()));
+                l_samochodow=new JLabel("Liczba pojazdow: "+d.liczbaSamochodow(k.getPesel()));
             } catch (Exception e) {
                 l_samochodow=new JLabel("Liczba pojazdow: 0");
             }
@@ -127,7 +127,7 @@ public class Drivers_window extends JFrame implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e) {            
             try {
-                // Edit_car ec= new Edit_car(d, d.findCar(s.getRejestracja()));
+                Edit_driver ed= new Edit_driver(d, d.findDriver(k.getPesel()));
             } catch (Exception x) {
                 x.printStackTrace();
             }

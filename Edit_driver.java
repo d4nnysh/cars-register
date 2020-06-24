@@ -74,16 +74,16 @@ public class Edit_driver extends JFrame implements ActionListener{
         try {
             if(e.getSource()==edytuj){
                 if(nowyKierowca){
-                    // d.addSamochod(new Car(wpiszRe.getText(), wpiszMa.getText(), wpiszMo.getText(), Integer.parseInt(wpiszRo.getText()), Integer.parseInt(wpiszP.getText())));
+                    d.addDriver(new Driver(Long.valueOf(wpiszP.getText()), wpiszN.getText(), wpiszI.getText()));
                     setVisible(false);
                 }
                 else{
-                    // d.editSamochod(new Car(wpiszRe.getText(), wpiszMa.getText(), wpiszMo.getText(), Integer.parseInt(wpiszRo.getText()), Integer.parseInt(wpiszP.getText())));
+                    d.editDriver(new Driver(Long.valueOf(wpiszP.getText()), wpiszN.getText(), wpiszI.getText()));
                     setVisible(false);
                 }
             }
             else if(e.getSource()==usun){                
-                // d.deleteSamochod(s);
+                d.deleteDriver(k);
                 setVisible(false);
             
             }

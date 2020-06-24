@@ -125,14 +125,14 @@ public class Db_connect {
         stmt.close();
         return kierowcy;
     }
-    public void addSamochod(Car c) throws SQLException{
+    public void addCar(Car c) throws SQLException{
         stmt=con.createStatement();
         query="INSERT INTO cars VALUES ('"+c.getRejestracja()+"', '"+c.getMarka()+"', '"+c.getModel()+"', '"+c.getRok()+"', '"+c.getPrzebieg()+"');";
         stmt.executeUpdate(query);
         con.commit();
         stmt.close();
     }
-    public void editSamochod(Car c) throws SQLException{
+    public void editCar(Car c) throws SQLException{
         stmt=con.createStatement();
         query="UPDATE cars SET marka='"+c.getMarka()+"', model='"+c.getModel()+"', rok='"+c.getRok()+"', przebieg='"+c.getPrzebieg()+"' WHERE rejestracja='"+c.getRejestracja()+"';";
         stmt.executeUpdate(query);
@@ -140,12 +140,37 @@ public class Db_connect {
         stmt.close();
 
     }
-    public void deleteSamochod(Car c) throws SQLException{
+    public void deleteCar(Car c) throws SQLException{
         stmt=con.createStatement();
         query="DELETE FROM cars WHERE rejestracja='"+c.getRejestracja()+"';";
         stmt.executeUpdate(query);
         con.commit();
         query="DELETE FROM owns WHERE rejestracja='"+c.getRejestracja()+"';";
+        stmt.executeUpdate(query);
+        con.commit();
+        stmt.close();
+    }
+    public void addDriver(Driver d) throws SQLException{
+        stmt=con.createStatement();
+        query="INSERT INTO drivers VALUES ('"+d.getPesel()+"', '"+d.getImie()+"', '"+d.getNazwisko()+"');";
+        stmt.executeUpdate(query);
+        con.commit();
+        stmt.close();
+    }
+    public void editDriver(Driver d) throws SQLException{
+        stmt=con.createStatement();
+        query="UPDATE drivers SET imie='"+d.getImie()+"', nazwisko='"+d.getNazwisko()+"' WHERE rejestracja='"+d.getPesel()+"';";
+        stmt.executeUpdate(query);
+        con.commit();
+        stmt.close();
+
+    }
+    public void deleteDriver(Driver d) throws SQLException{
+        stmt=con.createStatement();
+        query="DELETE FROM drivers WHERE pesel='"+d.getPesel()+"';";
+        stmt.executeUpdate(query);
+        con.commit();
+        query="DELETE FROM owns WHERE pesel='"+d.getPesel()+"';";
         stmt.executeUpdate(query);
         con.commit();
         stmt.close();

@@ -81,16 +81,16 @@ public class Edit_car extends JFrame implements ActionListener{
         try {
             if(e.getSource()==edytuj){
                 if(nowySamochod){
-                    d.addSamochod(new Car(wpiszRe.getText(), wpiszMa.getText(), wpiszMo.getText(), Integer.parseInt(wpiszRo.getText()), Integer.parseInt(wpiszP.getText())));
+                    d.addCar(new Car(wpiszRe.getText(), wpiszMa.getText(), wpiszMo.getText(), Integer.parseInt(wpiszRo.getText()), Integer.parseInt(wpiszP.getText())));
                     setVisible(false);
                 }
                 else{
-                    d.editSamochod(new Car(wpiszRe.getText(), wpiszMa.getText(), wpiszMo.getText(), Integer.parseInt(wpiszRo.getText()), Integer.parseInt(wpiszP.getText())));
+                    d.editCar(new Car(wpiszRe.getText(), wpiszMa.getText(), wpiszMo.getText(), Integer.parseInt(wpiszRo.getText()), Integer.parseInt(wpiszP.getText())));
                     setVisible(false);
                 }
             }
             else if(e.getSource()==usun){                
-                d.deleteSamochod(s);
+                d.deleteCar(s);
                 setVisible(false);
             
             }
