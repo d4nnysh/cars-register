@@ -78,9 +78,22 @@ public class Cars_window extends JFrame implements ActionListener{
             setVisible(false);
         }
         else if(e.getSource()==szukaj){
-            
+            if(findCar(rejestracja.getText())!=(null)){
+                Edit_car ec= new Edit_car(d, findCar(rejestracja.getText()));
+            }
+        }
+        else if(e.getSource()==dodaj){
+            Edit_car ec= new Edit_car(d);
         }
        
+    }
+    public Car findCar(String rej){
+        for (Car car : samochody) {
+            if(car.getRejestracja().equals(rej)){
+                return car;
+            }
+        }
+        return null;
     }
     class Car_cart extends JPanel implements ActionListener{
         private JLabel rejestracja, marka, model, rok, przebieg; 
