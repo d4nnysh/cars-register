@@ -5,7 +5,6 @@ import java.io.*;
 
 public class Db_connect {
     private Connection con= null;
-    private ArrayList<Driver> kierowcy= new ArrayList<Driver>();
     private Statement stmt=null;
     private String query=null;
     private ResultSet rs=null;
@@ -34,9 +33,6 @@ public class Db_connect {
     }
     public void setCon(Connection con) {
         this.con = con;
-    }
-    public void setKierowcy(ArrayList<Driver> kierowcy) {
-        this.kierowcy = kierowcy;
     }
     public int minPrzebieg() throws SQLException{
         int p=0;
@@ -153,6 +149,17 @@ public class Db_connect {
         stmt.executeUpdate(query);
         con.commit();
         stmt.close();
+    }
+    public Car findCar(String rej) throws SQLException{
+        Car c=null;
+        stmt=con.createStatement();
+        query="SELECT * FROM cars WHERE rejestracja='"+rej+"';";
+        rs=stmt.executeQuery(query);
+        while(rs.next()){
+           c=new Car(rs.getString("rejestracja"), rs.getString("marka"), rs.getString("model"), rs.getInt("rok"), rs.getInt("przebieg"));
+        }
+        stmt.close();
+        return c;
     }
     
     
