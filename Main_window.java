@@ -62,14 +62,18 @@ public class Main_window extends JFrame implements ActionListener{
         }
         
     }
+    public void odswiez(){
+        Main_window mw= new Main_window();
+        dispose();
+    }
     @Override
     public void actionPerformed(ActionEvent e) {
         
         if(e.getSource()==samochody){
-            Cars_window cw= new Cars_window(d);
+            Cars_window cw= new Cars_window(d, this);
         }
         else if(e.getSource()==kierowcy){
-            Drivers_window dw= new Drivers_window(d);
+            Drivers_window dw= new Drivers_window(d, this);
         }
         else{
             System.exit(0);
@@ -77,5 +81,6 @@ public class Main_window extends JFrame implements ActionListener{
     }
     public static void main(String[] args) {
         Main_window mw= new Main_window(); 
+        
     }
 }

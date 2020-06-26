@@ -244,6 +244,33 @@ public class Db_connect {
         stmt.close();
         return x;
     }
+    public boolean isEmptyString(String s){
+        if(s.equals("")){
+            return true;
+        }
+        return false;
+    }
+    public boolean canAddPesel(long pesel) throws SQLException{
+        int l = (int) (Math.log10(pesel) + 1);
+        if(l!=11){
+            return false;
+        }
+        stmt=con.createStatement();
+        query="SELECT pesel FROM drivers WHERE pesel='"+pesel+"';";
+        rs=stmt.executeQuery(query);
+        if(rs.next()){
+            return false;
+        }
+        stmt.close();
+        return true;
+    }
+    public boolean canAddRejestracja(String rejestracja){
+        if(rejestracja.length()>8){
+            return false;
+        }
+        return true;
+    }
+    
     
     
 

@@ -16,15 +16,17 @@ public class Cars_window extends JFrame implements ActionListener{
     private JButton wroc, szukaj, dodaj, odswiez;
     private JLabel wpisz= new JLabel("Wpisz rejestracje");
     private JTextField rejestracja= new JTextField("xxxxxx");
+    private Main_window mw;
 
-    public Cars_window(Db_connect d){
+    public Cars_window(Db_connect d, Main_window mw){
         this.d=d;
+        this.mw=mw;
         try {
             setBounds(100, 20, 1000, 666);
             setTitle("Menu samochodow");        
             setResizable(false);
             setLocationRelativeTo(null);
-            setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+            setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
             samochody=d.getCarsList();
             samochody.sort(Comparator.comparing(Car::getRejestracja));
             panel = new JPanel();
@@ -46,9 +48,9 @@ public class Cars_window extends JFrame implements ActionListener{
             odswiez.addActionListener(this);
 
 
-            samochody.forEach(x -> center_panel.add(new Car_cart(x)));
+            samochody.forEach(x -> center_panel.add(new Car_cart(x, this)));
             for (Car car : samochody) {
-                center_panel.add(new Car_cart(car));
+                center_panel.add(new Car_cart(car, this));
                 center_panel.add(new JSeparator());
             }
             scroll= new JScrollPane(center_panel);
@@ -81,34 +83,39 @@ public class Cars_window extends JFrame implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         try {
             if(e.getSource()==wroc){
-                setVisible(false);
+                dispose();
+                mw.odswiez();
             }
             else if(e.getSource()==szukaj){
                 if(d.findCar(rejestracja.getText())!=null){
-                    Edit_car ec= new Edit_car(d, d.findCar(rejestracja.getText()));
+                    Edit_car ec= new Edit_car(d, d.findCar(rejestracja.getText()), this);
                 }
             }
             else if(e.getSource()==dodaj){
-                Edit_car ec= new Edit_car(d);
+                Edit_car ec= new Edit_car(d, this);
             }
             else if(e.getSource()==odswiez){
-                Cars_window cw= new Cars_window(d);
-                this.dispose();
+               odswiez();
             }
         } catch (Exception x) {
             x.printStackTrace();
         }
         
     }
+    public void odswiez(){
+        Cars_window cw= new Cars_window(d, mw);
+        dispose();
+    }
 
     class Car_cart extends JPanel implements ActionListener{
         private JLabel rejestracja, marka, model, rok, przebieg; 
         private JButton edytuj= new JButton("Edytuj");
         private Car s;
-
+        private Cars_window cw;
         
-        public Car_cart(Car s){
+        public Car_cart(Car s, Cars_window cw){
             this.s=s;
+            this.cw=cw;
             rejestracja=new JLabel("Rejestracja: "+s.getRejestracja());
             marka=new JLabel("Marka: "+s.getMarka());
             model=new JLabel("Model: "+s.getModel());
@@ -126,7 +133,7 @@ public class Cars_window extends JFrame implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e) {            
             try {
-                Edit_car ec= new Edit_car(d, d.findCar(s.getRejestracja()));
+                Edit_car ec= new Edit_car(d, d.findCar(s.getRejestracja()), cw);
             } catch (Exception x) {
                 x.printStackTrace();
             }

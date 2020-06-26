@@ -16,15 +16,17 @@ public class Drivers_window extends JFrame implements ActionListener{
     private JButton wroc, szukaj, dodaj, odswiez;
     private JLabel wpisz= new JLabel("Wpisz pesel");
     private JTextField pesel= new JTextField("xxxxxx");
+    private Main_window mw;
 
-    public Drivers_window(Db_connect d){
+    public Drivers_window(Db_connect d, Main_window mw){
         this.d=d;
+        this.mw=mw;
         try {
             setBounds(100, 20, 1000, 666);
             setTitle("Menu kierowcow");        
             setResizable(false);
             setLocationRelativeTo(null);
-            setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+            setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
             kierowcy=d.getDriversList();
             kierowcy.sort(Comparator.comparing(Driver::getNazwisko));
             panel = new JPanel();
@@ -46,9 +48,9 @@ public class Drivers_window extends JFrame implements ActionListener{
             odswiez.addActionListener(this);
 
 
-            kierowcy.forEach(x -> center_panel.add(new Driver_cart(x)));
+            kierowcy.forEach(x -> center_panel.add(new Driver_cart(x, this)));
             for (Driver driver : kierowcy) {
-                center_panel.add(new Driver_cart(driver));
+                center_panel.add(new Driver_cart(driver, this));
                 center_panel.add(new JSeparator());
             }
             scroll= new JScrollPane(center_panel);
@@ -81,33 +83,42 @@ public class Drivers_window extends JFrame implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         try {
             if(e.getSource()==wroc){
-                setVisible(false);
+                dispose();
+                mw.odswiez();
             }
             else if(e.getSource()==szukaj){
-                if(d.findDriver(Long.parseLong(pesel.getText()))!=null){
-                    Edit_driver ec= new Edit_driver(d, d.findDriver(Long.parseLong(pesel.getText())));
+                try {
+                    if(d.findDriver(Long.parseLong(pesel.getText()))!=null){
+                        Edit_driver ec= new Edit_driver(d, d.findDriver(Long.parseLong(pesel.getText())), this);
+                    }
+                } catch (Exception c) {
                 }
+                
             }
             else if(e.getSource()==dodaj){
-                Edit_driver ed= new Edit_driver(d);
+                Edit_driver ed= new Edit_driver(d, this);
             }
             else if(e.getSource()==odswiez){
-                Drivers_window dw= new Drivers_window(d);
-                this.dispose();
+                odswiez();
             }
         } catch (Exception x) {
             x.printStackTrace();
         }
         
     }
+    public void odswiez(){
+        Drivers_window dw= new Drivers_window(d, mw);
+        dispose();
+    }
     class Driver_cart extends JPanel implements ActionListener{
         private JLabel pesel, imie, nazwisko, l_samochodow; 
         private JButton edytuj= new JButton("Edytuj");
         private Driver k;
-
+        private  Drivers_window dw;
         
-        public Driver_cart(Driver k){
+        public Driver_cart(Driver k, Drivers_window dw){
             this.k=k;
+            this.dw=dw;
             pesel=new JLabel("PESEL: "+k.getPesel());
             imie=new JLabel("Imie: "+k.getImie());
             nazwisko=new JLabel("Nazwisko: "+k.getNazwisko());
@@ -127,7 +138,7 @@ public class Drivers_window extends JFrame implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e) {            
             try {
-                Edit_driver ed= new Edit_driver(d, d.findDriver(k.getPesel()));
+                Edit_driver ed= new Edit_driver(d, d.findDriver(k.getPesel()), dw);
             } catch (Exception x) {
                 x.printStackTrace();
             }

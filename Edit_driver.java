@@ -11,11 +11,13 @@ public class Edit_driver extends JFrame implements ActionListener{
     private JComboBox samochody, wybierzSamochod;
     private JPanel panel= new JPanel();
     private boolean nowyKierowca=false;
+    private Drivers_window dw;
 
 
-    public Edit_driver(Db_connect d, Driver k){
+    public Edit_driver(Db_connect d, Driver k, Drivers_window dw){
         this.d=d;
         this.k=k;
+        this.dw=dw;
         createWindow();
         
         wpiszP.setEditable(false);
@@ -31,8 +33,9 @@ public class Edit_driver extends JFrame implements ActionListener{
 
 
     }
-    public Edit_driver(Db_connect d){
+    public Edit_driver(Db_connect d, Drivers_window dw){
         this.d=d;
+        this.dw=dw;
         createWindow();
         edytuj.setText("Dodaj");
         usun.setVisible(false);
@@ -49,7 +52,7 @@ public class Edit_driver extends JFrame implements ActionListener{
         setTitle("Edytuj kierowce");        
         setResizable(false);
         setLocationRelativeTo(null);
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         wpiszP= new JTextField();
         wpiszI= new JTextField();
         wpiszN= new JTextField();
@@ -101,30 +104,33 @@ public class Edit_driver extends JFrame implements ActionListener{
         try {
             if(e.getSource()==edytuj){
                 if(nowyKierowca){
-                    Driver dr=new Driver(Long.valueOf(wpiszP.getText()), wpiszN.getText(), wpiszI.getText());
+                    Driver dr=new Driver(Long.valueOf(wpiszP.getText()), wpiszI.getText(), wpiszN.getText());
                     d.addDriver(dr);
+                    dispose();
                     setVisible(false);
-                    Edit_driver ed= new Edit_driver(d, dr);
+                    Edit_driver ed= new Edit_driver(d, dr, dw);
                 }
                 else{
-                    d.editDriver(new Driver(Long.valueOf(wpiszP.getText()), wpiszN.getText(), wpiszI.getText()));
-                    setVisible(false);
+                    d.editDriver(new Driver(Long.valueOf(wpiszP.getText()), wpiszI.getText(), wpiszN.getText()));
+                    dispose();
+                    dw.odswiez();
                 }
             }
             else if(e.getSource()==usun){                
                 d.deleteDriver(k);
-                setVisible(false);
+                dispose();
+                dw.odswiez();
             
             }
             else if(e.getSource()==dodajS){                
                 d.addCarToDriver(k.getPesel(), wybierzSamochod.getSelectedItem().toString());
-                setVisible(false);
-                Edit_driver ed= new Edit_driver(d, k);            
+                dispose();
+                Edit_driver ed= new Edit_driver(d, k, dw);            
             }
             else if(e.getSource()==usunS){                
                 d.deleteCarOfDriver(samochody.getSelectedItem().toString());
-                setVisible(false);
-                Edit_driver ed= new Edit_driver(d, k); 
+                dispose();
+                Edit_driver ed= new Edit_driver(d, k, dw); 
             
             }
         } catch (Exception x) {
@@ -134,6 +140,7 @@ public class Edit_driver extends JFrame implements ActionListener{
         
         if(e.getSource()==wroc){
             setVisible(false);
+            dw.odswiez();
         }
 
     }

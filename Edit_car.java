@@ -10,11 +10,13 @@ public class Edit_car extends JFrame implements ActionListener{
     private JButton wroc, edytuj, usun;
     private JPanel panel= new JPanel();
     private boolean nowySamochod=false;
+    private Cars_window cw;
 
 
-    public Edit_car(Db_connect d, Car s){
+    public Edit_car(Db_connect d, Car s, Cars_window cw){
         this.d=d;
         this.s=s;
+        this.cw=cw;
         createWindow();
         wpiszRe.setEditable(false);
         wpiszRe.setText(s.getRejestracja());
@@ -31,8 +33,9 @@ public class Edit_car extends JFrame implements ActionListener{
 
 
     }
-    public Edit_car(Db_connect d){
+    public Edit_car(Db_connect d, Cars_window cw){
         this.d=d;
+        this.cw=cw;
         createWindow();
         edytuj.setText("Dodaj");
         usun.setVisible(false);
@@ -45,7 +48,7 @@ public class Edit_car extends JFrame implements ActionListener{
         setTitle("Edytuj samochod");        
         setResizable(false);
         setLocationRelativeTo(null);
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         wroc=new JButton("Wroc");
         edytuj=new JButton("Zatwierdz zmiany");
         usun=new JButton("Usun");
@@ -92,15 +95,18 @@ public class Edit_car extends JFrame implements ActionListener{
                 if(nowySamochod){
                     d.addCar(new Car(wpiszRe.getText(), wpiszMa.getText(), wpiszMo.getText(), Integer.parseInt(wpiszRo.getText()), Integer.parseInt(wpiszP.getText())));
                     setVisible(false);
+                    cw.odswiez();
                 }
                 else{
                     d.editCar(new Car(wpiszRe.getText(), wpiszMa.getText(), wpiszMo.getText(), Integer.parseInt(wpiszRo.getText()), Integer.parseInt(wpiszP.getText())));
-                    setVisible(false);
+                    dispose();
+                    cw.odswiez();
                 }
             }
             else if(e.getSource()==usun){                
                 d.deleteCar(s);
-                setVisible(false);
+                dispose();
+                cw.odswiez();
             
             }
         } catch (Exception x) {
@@ -109,7 +115,7 @@ public class Edit_car extends JFrame implements ActionListener{
         }
         
         if(e.getSource()==wroc){
-            setVisible(false);
+            dispose();
         }
 
     }
