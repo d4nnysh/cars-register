@@ -159,7 +159,7 @@ public class Db_connect {
     }
     public void editDriver(Driver d) throws SQLException{
         stmt=con.createStatement();
-        query="UPDATE drivers SET imie='"+d.getImie()+"', nazwisko='"+d.getNazwisko()+"' WHERE rejestracja='"+d.getPesel()+"';";
+        query="UPDATE drivers SET imie='"+d.getImie()+"', nazwisko='"+d.getNazwisko()+"' WHERE pesel='"+d.getPesel()+"';";
         stmt.executeUpdate(query);
         con.commit();
         stmt.close();
@@ -174,17 +174,6 @@ public class Db_connect {
         stmt.executeUpdate(query);
         con.commit();
         stmt.close();
-    }
-    public int liczbaSamochodow(long pesel) throws SQLException{
-        int x=0;
-        stmt=con.createStatement();
-        query="SELECT COUNT(rejestracja) FROM owns WHERE pesel='"+pesel+"';";
-        rs=stmt.executeQuery(query);
-        while(rs.next()){
-           x=rs.getInt("COUNT(rejestracja)");
-        }
-        stmt.close();
-        return x;
     }
     public Car findCar(String rej) throws SQLException{
         Car c=null;
@@ -207,6 +196,53 @@ public class Db_connect {
         }
         stmt.close();
         return d;
+    }
+    public ArrayList<String> getFreeCars() throws SQLException{
+        ArrayList<String> samochody= new ArrayList<String>();
+        stmt=con.createStatement();
+        query="SELECT rejestracja FROM cars WHERE rejestracja NOT IN(SELECT cars.rejestracja FROM cars INNER JOIN owns ON cars.rejestracja = owns.rejestracja);";
+        rs=stmt.executeQuery(query);
+        while(rs.next()){
+            samochody.add(rs.getString("rejestracja"));
+        }
+        stmt.close();
+        return samochody;
+    }
+    public ArrayList<String> getCarsOfDriver(long pesel) throws SQLException{
+        ArrayList<String> samochody= new ArrayList<String>();
+        stmt=con.createStatement();
+        query="SELECT rejestracja FROM owns WHERE pesel='"+pesel+"';";
+        rs=stmt.executeQuery(query);
+        while(rs.next()){
+            samochody.add(rs.getString("rejestracja"));
+        }
+        stmt.close();
+        return samochody;
+    }
+    public void addCarToDriver(long pesel, String rejestracja) throws SQLException{
+        stmt=con.createStatement();
+        query="INSERT INTO owns VALUES ('"+pesel+"', '"+rejestracja+"');";
+        stmt.executeUpdate(query);
+        con.commit();
+        stmt.close();
+    }
+    public void deleteCarOfDriver(String rejestracja) throws SQLException{
+        stmt=con.createStatement();
+        query="DELETE FROM owns WHERE rejestracja='"+rejestracja+"';";
+        stmt.executeUpdate(query);
+        con.commit();
+        stmt.close();
+    }
+    public long getDriverPesel(String rejestracja) throws SQLException{
+        long x= 0;
+        stmt=con.createStatement();
+        query="SELECT pesel FROM owns WHERE rejestracja='"+rejestracja+"';";
+        rs=stmt.executeQuery(query);
+        while(rs.next()){
+           x=rs.getLong("pesel");
+        }
+        stmt.close();
+        return x;
     }
     
     

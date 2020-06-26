@@ -5,7 +5,7 @@ import java.awt.GridLayout;
 public class Edit_car extends JFrame implements ActionListener{
     private Db_connect d;
     private Car s;
-    private JLabel rejestracja, marka, model, rok, przebieg; 
+    private JLabel rejestracja, marka, model, rok, przebieg, wlasciciel; 
     private JTextField wpiszRe, wpiszMa, wpiszMo, wpiszRo, wpiszP; 
     private JButton wroc, edytuj, usun;
     private JPanel panel= new JPanel();
@@ -22,6 +22,12 @@ public class Edit_car extends JFrame implements ActionListener{
         wpiszMo.setText(s.getModel());
         wpiszRo.setText(String.valueOf(s.getRok()));
         wpiszP.setText(String.valueOf(s.getPrzebieg()));
+        try {
+            wlasciciel.setText("PESEL wlasciciela: "+String.valueOf(d.getDriverPesel(s.getRejestracja())));
+        } catch (Exception e) {
+            
+        }
+        
 
 
     }
@@ -30,6 +36,7 @@ public class Edit_car extends JFrame implements ActionListener{
         createWindow();
         edytuj.setText("Dodaj");
         usun.setVisible(false);
+        wlasciciel.setVisible(false);
         nowySamochod=true;
         
     }
@@ -40,13 +47,14 @@ public class Edit_car extends JFrame implements ActionListener{
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         wroc=new JButton("Wroc");
-        edytuj=new JButton("Edytuj");
+        edytuj=new JButton("Zatwierdz zmiany");
         usun=new JButton("Usun");
         rejestracja=new JLabel("Rejestracja: ");
         marka=new JLabel("Marka: ");
         model=new JLabel("Model: ");
         rok=new JLabel("Rok: ");
         przebieg=new JLabel("Przebieg: ");
+        wlasciciel=new JLabel("");
         wpiszRe= new JTextField();
         wpiszMa= new JTextField();
         wpiszMo= new JTextField();
@@ -67,6 +75,7 @@ public class Edit_car extends JFrame implements ActionListener{
         panel.add(wpiszRo);
         panel.add(przebieg);
         panel.add(wpiszP);
+        panel.add(wlasciciel);
         panel.add(edytuj);
         panel.add(usun);
         panel.add(wroc);

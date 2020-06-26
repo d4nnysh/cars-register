@@ -112,7 +112,7 @@ public class Drivers_window extends JFrame implements ActionListener{
             imie=new JLabel("Imie: "+k.getImie());
             nazwisko=new JLabel("Nazwisko: "+k.getNazwisko());
             try {
-                l_samochodow=new JLabel("Liczba pojazdow: "+d.liczbaSamochodow(k.getPesel()));
+                l_samochodow=new JLabel("Liczba pojazdow: "+d.getCarsOfDriver(k.getPesel()).size());
             } catch (Exception e) {
                 l_samochodow=new JLabel("Liczba pojazdow: 0");
             }
