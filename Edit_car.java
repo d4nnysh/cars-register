@@ -91,16 +91,23 @@ public class Edit_car extends JFrame implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         try {
-            if(e.getSource()==edytuj){
-                if(nowySamochod){
-                    d.addCar(new Car(wpiszRe.getText(), wpiszMa.getText(), wpiszMo.getText(), Integer.parseInt(wpiszRo.getText()), Integer.parseInt(wpiszP.getText())));
-                    setVisible(false);
-                    cw.odswiez();
-                }
-                else{
-                    d.editCar(new Car(wpiszRe.getText(), wpiszMa.getText(), wpiszMo.getText(), Integer.parseInt(wpiszRo.getText()), Integer.parseInt(wpiszP.getText())));
-                    dispose();
-                    cw.odswiez();
+            if(e.getSource()==edytuj){                
+                try {
+                    int r, p;
+                    r=Integer.parseInt(wpiszRo.getText());
+                    p=Integer.parseInt(wpiszP.getText());
+                    if(nowySamochod&&d.canAddRejestracja(wpiszRe.getText())){                    
+                        d.addCar(new Car(wpiszRe.getText(), wpiszMa.getText(), wpiszMo.getText(), r, p));
+                        dispose();
+                        cw.odswiez();                                          
+                    }
+                    else if(!nowySamochod){
+                        d.editCar(new Car(wpiszRe.getText(), wpiszMa.getText(), wpiszMo.getText(), r, p));
+                        dispose();
+                        cw.odswiez();
+                    }
+                } catch (Exception x) {
+                    x.printStackTrace();
                 }
             }
             else if(e.getSource()==usun){                
@@ -111,7 +118,6 @@ public class Edit_car extends JFrame implements ActionListener{
             }
         } catch (Exception x) {
             x.printStackTrace();
-            System.exit(0);
         }
         
         if(e.getSource()==wroc){

@@ -244,12 +244,6 @@ public class Db_connect {
         stmt.close();
         return x;
     }
-    public boolean isEmptyString(String s){
-        if(s.equals("")){
-            return true;
-        }
-        return false;
-    }
     public boolean canAddPesel(long pesel) throws SQLException{
         int l = (int) (Math.log10(pesel) + 1);
         if(l!=11){
@@ -264,17 +258,19 @@ public class Db_connect {
         stmt.close();
         return true;
     }
-    public boolean canAddRejestracja(String rejestracja){
+    public boolean canAddRejestracja(String rejestracja) throws SQLException{
         if(rejestracja.length()>8){
             return false;
         }
+        stmt=con.createStatement();
+        query="SELECT rejestracja FROM cars WHERE rejestracja='"+rejestracja+"';";
+        rs=stmt.executeQuery(query);
+        if(rs.next()){
+            return false;
+        }
+        stmt.close();
         return true;
     }
-    
-    
-    
-
-
 
     public void connect() throws Exception{
         Class.forName("org.sqlite.JDBC");        

@@ -103,18 +103,23 @@ public class Edit_driver extends JFrame implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         try {
             if(e.getSource()==edytuj){
-                if(nowyKierowca){
-                    Driver dr=new Driver(Long.valueOf(wpiszP.getText()), wpiszI.getText(), wpiszN.getText());
-                    d.addDriver(dr);
-                    dispose();
-                    setVisible(false);
-                    Edit_driver ed= new Edit_driver(d, dr, dw);
+                try {
+                    long p= Long.valueOf(wpiszP.getText());
+                    if(nowyKierowca&&d.canAddPesel(p)){
+                        Driver dr=new Driver(p, wpiszI.getText(), wpiszN.getText());
+                        d.addDriver(dr);
+                        dispose();
+                        Edit_driver ed= new Edit_driver(d, dr, dw);
+                    }
+                    else if(!nowyKierowca){
+                        d.editDriver(new Driver(p, wpiszI.getText(), wpiszN.getText()));
+                        dispose();
+                        dw.odswiez();
+                    }
+                } catch (Exception x) {
+                    x.printStackTrace();
                 }
-                else{
-                    d.editDriver(new Driver(Long.valueOf(wpiszP.getText()), wpiszI.getText(), wpiszN.getText()));
-                    dispose();
-                    dw.odswiez();
-                }
+                
             }
             else if(e.getSource()==usun){                
                 d.deleteDriver(k);
@@ -122,12 +127,12 @@ public class Edit_driver extends JFrame implements ActionListener{
                 dw.odswiez();
             
             }
-            else if(e.getSource()==dodajS){                
+            else if(e.getSource()==dodajS&&wybierzSamochod.getSelectedIndex()>-1){                
                 d.addCarToDriver(k.getPesel(), wybierzSamochod.getSelectedItem().toString());
                 dispose();
                 Edit_driver ed= new Edit_driver(d, k, dw);            
             }
-            else if(e.getSource()==usunS){                
+            else if(e.getSource()==usunS&&samochody.getSelectedIndex()>-1){                
                 d.deleteCarOfDriver(samochody.getSelectedItem().toString());
                 dispose();
                 Edit_driver ed= new Edit_driver(d, k, dw); 
