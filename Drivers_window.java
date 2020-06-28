@@ -4,11 +4,10 @@ import java.util.Comparator;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.Dimension;
-
-
-
 import javax.swing.*;
-
+/**
+ * Okno do przegladania danych kierowcow
+ */
 public class Drivers_window extends JFrame implements ActionListener{
     private Db_connect d;
     private ArrayList<Driver> kierowcy;
@@ -33,10 +32,8 @@ public class Drivers_window extends JFrame implements ActionListener{
             panel = new JPanel();
             top_panel = new JPanel();
             center_panel= new JPanel();
-
             top_panel.setLayout(new GridLayout(1,0));
             center_panel.setLayout(new BoxLayout(center_panel, 1));
-
             panel.setLayout(new BorderLayout());
 
             wroc= new JButton("Wroc");
@@ -60,38 +57,25 @@ public class Drivers_window extends JFrame implements ActionListener{
             wpisz.setFont(wroc.getFont().deriveFont(25f));
             pesel.setFont(wroc.getFont().deriveFont(25f));
 
-
-
             for (Driver driver : kierowcy) {
                 center_panel.add(new Driver_cart(driver, this));
                 center_panel.add(new JSeparator());
             }
-            scroll= new JScrollPane(center_panel);
-
-            
+            scroll= new JScrollPane(center_panel);            
             top_panel.add(wpisz);
             top_panel.add(pesel);
             top_panel.add(szukaj);
             top_panel.add(dodaj);
-            top_panel.add(odswiez);
-            
+            top_panel.add(odswiez);            
             panel.add(wroc, BorderLayout.SOUTH);
             panel.add(scroll, BorderLayout.CENTER);
             panel.add(top_panel, BorderLayout.NORTH);
-
             getContentPane().add(panel);            
             setVisible(true);
-            
-
-
         } catch (Exception e) {
             e.printStackTrace();
-        }
-        
-
-
+        }        
     }
-
     @Override
     public void actionPerformed(ActionEvent e) {
         try {
@@ -108,6 +92,7 @@ public class Drivers_window extends JFrame implements ActionListener{
                         Alert_window aw= new Alert_window(0);
                     }
                 } catch (Exception c) {
+                    Alert_window aw= new Alert_window(0);
                 }
             }
             else if(e.getSource()==dodaj){
@@ -121,16 +106,22 @@ public class Drivers_window extends JFrame implements ActionListener{
         }
         
     }
+    /**
+     * Funkcja do odwiezenia danych
+     */
     public void odswiez(){
         Drivers_window dw= new Drivers_window(d, mw);
         dispose();
     }
+    /**
+     * Panel reprezentujacy jeden wiersz danych
+     */
     class Driver_cart extends JPanel implements ActionListener{
         private JLabel pesel, imie, nazwisko, l_samochodow; 
         private JButton edytuj= new JButton("Edytuj");
         private Driver k;
         private  Drivers_window dw;
-        
+                
         public Driver_cart(Driver k, Drivers_window dw){
             this.k=k;
             this.dw=dw;

@@ -1,7 +1,9 @@
 import javax.swing.*;
 import java.awt.event.*;
 import java.awt.GridLayout;
-
+/**
+ * Okno dodawania oraz edycji samochodow
+ */
 public class Edit_car extends JFrame implements ActionListener{
     private Db_connect d;
     private Car s;
@@ -11,8 +13,9 @@ public class Edit_car extends JFrame implements ActionListener{
     private JPanel panel= new JPanel();
     private boolean nowySamochod=false;
     private Cars_window cw;
-
-
+    /**
+     * Konstruktor do edycji samochodu
+     */
     public Edit_car(Db_connect d, Car s, Cars_window cw){
         this.d=d;
         this.s=s;
@@ -34,6 +37,9 @@ public class Edit_car extends JFrame implements ActionListener{
         } catch (Exception e) {
         }
     }
+    /**
+     * Konstruktor do dodawania nowego samochodu
+     */
     public Edit_car(Db_connect d, Cars_window cw){
         this.d=d;
         this.cw=cw;
@@ -41,9 +47,11 @@ public class Edit_car extends JFrame implements ActionListener{
         edytuj.setText("Dodaj samochod");
         usun.setVisible(false);
         wlasciciel.setVisible(false);
-        nowySamochod=true;
-        
+        nowySamochod=true;        
     }
+    /**
+     * Funkcja tworzaca okno
+     */
     public void createWindow(){
         setBounds(100, 20, 600, 400);
         setTitle("Edytuj samochod");        
@@ -83,12 +91,7 @@ public class Edit_car extends JFrame implements ActionListener{
         rok.setFont(wroc.getFont().deriveFont(20f));
         wlasciciel.setFont(wroc.getFont().deriveFont(17f));
 
-
-
-
-
         panel.setLayout(new GridLayout(0,2));
-
         panel.add(rejestracja);
         panel.add(wpiszRe);
         panel.add(marka);
@@ -103,9 +106,6 @@ public class Edit_car extends JFrame implements ActionListener{
         panel.add(edytuj);
         panel.add(usun);
         panel.add(wroc);
-
-
-
         getContentPane().add(panel); 
         setVisible(true);
     }
@@ -138,16 +138,13 @@ public class Edit_car extends JFrame implements ActionListener{
             else if(e.getSource()==usun){                
                 d.deleteCar(s);
                 dispose();
-                cw.odswiez();
-            
+                cw.odswiez();            
             }
         } catch (Exception x) {
             x.printStackTrace();
-        }
-        
+        }        
         if(e.getSource()==wroc){
             dispose();
         }
-
     }
 }

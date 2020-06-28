@@ -1,3 +1,6 @@
+/**
+ * Klasa reprezentujaca samochod
+ */
 public class Car {
     private String rejestracja;
     private String marka;
@@ -43,7 +46,6 @@ public class Car {
     }
     @Override
     public String toString() {
-        // TODO Auto-generated method stub
         return rejestracja+" "+marka+" "+model;
     }
 

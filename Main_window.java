@@ -3,7 +3,9 @@ import java.awt.GridLayout;
 import java.awt.event.*;
 import java.awt.Dimension;
 import javax.swing.*;
-
+/**
+ * Glowne okno programu
+ */
 public class Main_window extends JFrame implements ActionListener{
     private JButton kierowcy, samochody, wyjscie;            
     private JLabel stat, avgW, avgP, maxW, maxP, avgSpK; 
@@ -39,42 +41,37 @@ public class Main_window extends JFrame implements ActionListener{
             kierowcy.addActionListener(this);
             samochody.addActionListener(this);
             wyjscie.addActionListener(this);
-
             wyjscie.setPreferredSize(new Dimension(0, 100));
             kierowcy.setFont(stat.getFont().deriveFont(50f));
             samochody.setFont(stat.getFont().deriveFont(50f));
-            wyjscie.setFont(stat.getFont().deriveFont(50f));
-            
+            wyjscie.setFont(stat.getFont().deriveFont(50f));            
             
             panel = new JPanel();
             right_panel = new JPanel();
             center_panel = new JPanel();
-
             panel.setLayout(new BorderLayout());
             right_panel.setLayout(new GridLayout(0,1));
             center_panel.setLayout(new GridLayout(0,1));
             center_panel.add(kierowcy);
-            center_panel.add(samochody);
-            
+            center_panel.add(samochody);            
             right_panel.add(stat);
             right_panel.add(avgW);
             right_panel.add(avgP);
             right_panel.add(maxW);
             right_panel.add(maxP);
             right_panel.add(avgSpK);
-
             panel.add(center_panel, BorderLayout.CENTER);
             panel.add(wyjscie, BorderLayout.SOUTH);
             panel.add(right_panel, BorderLayout.EAST);
-
             getContentPane().add(panel);            
             setVisible(true);
         } catch (Exception e) {
             e.printStackTrace();
-            System.exit(0);
         }
-        
     }
+    /**
+     * Funkcja do odswiezenia statystyk
+     */
     public void odswiez(){
         Main_window mw= new Main_window();
         dispose();
@@ -93,7 +90,6 @@ public class Main_window extends JFrame implements ActionListener{
         }
     }
     public static void main(String[] args) {
-        Main_window mw= new Main_window(); 
-        
+        Main_window mw= new Main_window();         
     }
 }

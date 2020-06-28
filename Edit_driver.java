@@ -1,7 +1,9 @@
 import javax.swing.*;
 import java.awt.event.*;
 import java.awt.GridLayout;
-
+/**
+ * Okno dodawania oraz edycji kierowcow
+ */
 public class Edit_driver extends JFrame implements ActionListener{
     private Db_connect d;
     private Driver k;
@@ -12,27 +14,27 @@ public class Edit_driver extends JFrame implements ActionListener{
     private JPanel panel= new JPanel();
     private boolean nowyKierowca=false;
     private Drivers_window dw;
-
-
+    /**
+     * Konstruktor do edycji kierowcy
+     */
     public Edit_driver(Db_connect d, Driver k, Drivers_window dw){
         this.d=d;
         this.k=k;
         this.dw=dw;
-        createWindow();
-        
-        wpiszP.setEditable(false);
-        
+        createWindow();        
+        wpiszP.setEditable(false);        
         wpiszP.setText(String.valueOf(k.getPesel()));       
         wpiszI.setText(k.getImie());
         wpiszN.setText(k.getNazwisko());
         try {            
             d.getCarsOfDriver(k.getPesel()).forEach(x -> samochody.addItem(x));
         } catch (Exception e) {
-            //TODO: handle exception
+            e.printStackTrace();
         }
-
-
     }
+    /**
+     * Konstruktor do dodawania nowego kierowcy
+     */
     public Edit_driver(Db_connect d, Drivers_window dw){
         this.d=d;
         this.dw=dw;
@@ -43,10 +45,11 @@ public class Edit_driver extends JFrame implements ActionListener{
         wybierzSamochod.setVisible(false);
         dodajS.setVisible(false);
         usunS.setVisible(false);
-
-        nowyKierowca=true;
-        
+        nowyKierowca=true;        
     }
+    /**
+     * Funkcja tworzaca okno
+     */
     public void createWindow(){
         setBounds(100, 20, 600, 400);
         setTitle("Edytuj kierowce");        
@@ -68,10 +71,8 @@ public class Edit_driver extends JFrame implements ActionListener{
         try {
             wybierzSamochod= new JComboBox<>(d.getFreeCars().toArray());            
         } catch (Exception e) {
-        }
-        
-
-        
+            e.printStackTrace();
+        }        
         edytuj.addActionListener(this);
         wroc.addActionListener(this);
         usun.addActionListener(this);
@@ -93,7 +94,6 @@ public class Edit_driver extends JFrame implements ActionListener{
         nazwisko.setFont(wroc.getFont().deriveFont(20f));
 
         panel.setLayout(new GridLayout(0,2));
-
         panel.add(pesel);
         panel.add(wpiszP);
         panel.add(imie);
@@ -106,11 +106,7 @@ public class Edit_driver extends JFrame implements ActionListener{
         panel.add(dodajS);
         panel.add(edytuj);
         panel.add(usun);
-        panel.add(wroc);
-        
-
-
-
+        panel.add(wroc);        
         getContentPane().add(panel); 
         setVisible(true);
     }
@@ -136,14 +132,12 @@ public class Edit_driver extends JFrame implements ActionListener{
                     }
                 } catch (Exception x) {
                     Alert_window aw= new Alert_window(1);
-                }
-                
+                }                
             }
             else if(e.getSource()==usun){                
                 d.deleteDriver(k);
                 dispose();
-                dw.odswiez();
-            
+                dw.odswiez();            
             }
             else if(e.getSource()==dodajS&&wybierzSamochod.getSelectedIndex()>-1){                
                 d.addCarToDriver(k.getPesel(), wybierzSamochod.getSelectedItem().toString());
@@ -153,18 +147,14 @@ public class Edit_driver extends JFrame implements ActionListener{
             else if(e.getSource()==usunS&&samochody.getSelectedIndex()>-1){                
                 d.deleteCarOfDriver(samochody.getSelectedItem().toString());
                 dispose();
-                Edit_driver ed= new Edit_driver(d, k, dw); 
-            
+                Edit_driver ed= new Edit_driver(d, k, dw);             
             }
         } catch (Exception x) {
             x.printStackTrace();
-            System.exit(0);
         }
-        
         if(e.getSource()==wroc){
             setVisible(false);
             dw.odswiez();
         }
-
     }
 }

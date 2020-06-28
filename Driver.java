@@ -1,17 +1,14 @@
-import java.util.ArrayList;
-
+/**
+ * Klasa reprezentujaca kierowce
+ */
 public class Driver {
     private long pesel;
     private String imie;
     private String nazwisko;
-    private ArrayList<Car> samochody= new ArrayList<Car>();
     public Driver(long pesel, String imie, String nazwisko){
         this.pesel=pesel;
         this.imie=imie;
         this.nazwisko=nazwisko;
-    }
-    public ArrayList<Car> getCars() {
-        return samochody;
     }
     public String getImie() {
         return imie;
@@ -21,9 +18,6 @@ public class Driver {
     }
     public long getPesel() {
         return pesel;
-    }
-    public void setCars(ArrayList<Car> cars) {
-        this.samochody = cars;
     }
     public void setImie(String imie) {
         this.imie = imie;

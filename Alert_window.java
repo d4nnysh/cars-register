@@ -1,7 +1,9 @@
 import javax.swing.*;
 import java.awt.event.*;
 import java.awt.GridLayout;
-
+/**
+ * Okno sluzace do alertowania uzytkownika
+ */
 public class Alert_window extends JFrame implements ActionListener{
     private JLabel informacja = new JLabel(); 
     private JButton ok= new JButton("OK");
@@ -31,6 +33,8 @@ public class Alert_window extends JFrame implements ActionListener{
             informacja.setText("Wpisz liczby w polach rok oraz przebieg");    
             break;
         }
+        informacja.setFont(informacja.getFont().deriveFont(15f));
+        ok.setFont(informacja.getFont().deriveFont(15f));
         ok.addActionListener(this);
         panel.setLayout(new GridLayout(0,1));
         panel.add(informacja);
