@@ -3,6 +3,8 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.awt.Font;
+import java.awt.Dimension;
 
 
 
@@ -47,8 +49,9 @@ public class Drivers_window extends JFrame implements ActionListener{
             dodaj.addActionListener(this);
             odswiez.addActionListener(this);
 
+            wroc.setPreferredSize(new Dimension(0, 80));
 
-            kierowcy.forEach(x -> center_panel.add(new Driver_cart(x, this)));
+
             for (Driver driver : kierowcy) {
                 center_panel.add(new Driver_cart(driver, this));
                 center_panel.add(new JSeparator());
@@ -91,9 +94,11 @@ public class Drivers_window extends JFrame implements ActionListener{
                     if(d.findDriver(Long.parseLong(pesel.getText()))!=null){
                         Edit_driver ec= new Edit_driver(d, d.findDriver(Long.parseLong(pesel.getText())), this);
                     }
+                    else{
+                        Alert_window aw= new Alert_window(0);
+                    }
                 } catch (Exception c) {
                 }
-                
             }
             else if(e.getSource()==dodaj){
                 Edit_driver ed= new Edit_driver(d, this);
@@ -127,6 +132,12 @@ public class Drivers_window extends JFrame implements ActionListener{
             } catch (Exception e) {
                 l_samochodow=new JLabel("Liczba pojazdow: 0");
             }
+            pesel.setFont(pesel.getFont().deriveFont(15f));
+            imie.setFont(pesel.getFont().deriveFont(15f));
+            nazwisko.setFont(pesel.getFont().deriveFont(15f));
+            l_samochodow.setFont(pesel.getFont().deriveFont(15f));
+            edytuj.setFont(pesel.getFont().deriveFont(15f));
+
             this.setLayout(new GridLayout(1,0));
             this.add(pesel);
             this.add(imie);

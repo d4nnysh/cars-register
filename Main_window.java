@@ -1,6 +1,8 @@
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.*;
+import java.awt.Font;
+import java.awt.Dimension;
 import javax.swing.*;
 
 public class Main_window extends JFrame implements ActionListener{
@@ -18,12 +20,19 @@ public class Main_window extends JFrame implements ActionListener{
             setLocationRelativeTo(null);
             setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-            stat=new JLabel("Statystyki");
+            stat=new JLabel("Statystyki");            
             avgW=new JLabel("Sredni wiek pojazdu: "+d.avgWiek() +" lat");
             avgP=new JLabel("Sredni przebieg pojazdu: "+d.avgPrzebieg()+ " km");
             maxW=new JLabel("Najstarszy pojazd : "+d.maxWiek()+ " lat");
             maxP=new JLabel("Najwiekszy przebieg pojazdu: "+d.avgPrzebieg()+" km");
             avgSpK=new JLabel("Srednio pojazdow na kierowce: "+d.avgCarsPerDriver());
+
+            stat.setFont(stat.getFont().deriveFont(64f));
+            avgW.setFont(stat.getFont().deriveFont(16f));
+            avgP.setFont(stat.getFont().deriveFont(16f));
+            maxW.setFont(stat.getFont().deriveFont(16f));
+            maxP.setFont(stat.getFont().deriveFont(16f));
+            avgSpK.setFont(stat.getFont().deriveFont(16f));
 
             kierowcy=new JButton("Menu kierowcow");
             samochody=new JButton("Menu samochodow");
@@ -31,6 +40,12 @@ public class Main_window extends JFrame implements ActionListener{
             kierowcy.addActionListener(this);
             samochody.addActionListener(this);
             wyjscie.addActionListener(this);
+
+            wyjscie.setPreferredSize(new Dimension(0, 100));
+            kierowcy.setFont(stat.getFont().deriveFont(50f));
+            samochody.setFont(stat.getFont().deriveFont(50f));
+            wyjscie.setFont(stat.getFont().deriveFont(50f));
+            
             
             panel = new JPanel();
             right_panel = new JPanel();
@@ -39,7 +54,6 @@ public class Main_window extends JFrame implements ActionListener{
             panel.setLayout(new BorderLayout());
             right_panel.setLayout(new GridLayout(0,1));
             center_panel.setLayout(new GridLayout(0,1));
-
             center_panel.add(kierowcy);
             center_panel.add(samochody);
             

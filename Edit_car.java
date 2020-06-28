@@ -25,13 +25,14 @@ public class Edit_car extends JFrame implements ActionListener{
         wpiszRo.setText(String.valueOf(s.getRok()));
         wpiszP.setText(String.valueOf(s.getPrzebieg()));
         try {
-            wlasciciel.setText("PESEL wlasciciela: "+String.valueOf(d.getDriverPesel(s.getRejestracja())));
+            if (d.getDriverPesel(s.getRejestracja())==0) {
+                wlasciciel.setText("PESEL wlasciciela: -");
+            }
+            else{
+                wlasciciel.setText("PESEL wlasciciela: "+d.getDriverPesel(s.getRejestracja()));
+            }
         } catch (Exception e) {
-            
         }
-        
-
-
     }
     public Edit_car(Db_connect d, Cars_window cw){
         this.d=d;
@@ -106,8 +107,12 @@ public class Edit_car extends JFrame implements ActionListener{
                         dispose();
                         cw.odswiez();
                     }
+                    else{
+                        Alert_window aw= new Alert_window(3);
+                    }
                 } catch (Exception x) {
                     x.printStackTrace();
+                    Alert_window aw= new Alert_window(4);
                 }
             }
             else if(e.getSource()==usun){                

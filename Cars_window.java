@@ -15,7 +15,7 @@ public class Cars_window extends JFrame implements ActionListener{
     private JScrollPane scroll;
     private JButton wroc, szukaj, dodaj, odswiez;
     private JLabel wpisz= new JLabel("Wpisz rejestracje");
-    private JTextField rejestracja= new JTextField("xxxxxx");
+    private JTextField rejestracja= new JTextField();
     private Main_window mw;
 
     public Cars_window(Db_connect d, Main_window mw){
@@ -33,7 +33,7 @@ public class Cars_window extends JFrame implements ActionListener{
             top_panel = new JPanel();
             center_panel= new JPanel();
 
-            // center_panel.setLayout(new GridLayout(0,1));
+            top_panel.setLayout(new GridLayout(1,0));
             center_panel.setLayout(new BoxLayout(center_panel, 1));
 
             panel.setLayout(new BorderLayout());
@@ -47,14 +47,11 @@ public class Cars_window extends JFrame implements ActionListener{
             dodaj.addActionListener(this);
             odswiez.addActionListener(this);
 
-
-            samochody.forEach(x -> center_panel.add(new Car_cart(x, this)));
             for (Car car : samochody) {
                 center_panel.add(new Car_cart(car, this));
                 center_panel.add(new JSeparator());
             }
             scroll= new JScrollPane(center_panel);
-
             
             top_panel.add(wpisz);
             top_panel.add(rejestracja);
@@ -89,6 +86,9 @@ public class Cars_window extends JFrame implements ActionListener{
             else if(e.getSource()==szukaj){
                 if(d.findCar(rejestracja.getText())!=null){
                     Edit_car ec= new Edit_car(d, d.findCar(rejestracja.getText()), this);
+                }
+                else{
+                    Alert_window aw= new Alert_window(3);
                 }
             }
             else if(e.getSource()==dodaj){
