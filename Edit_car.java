@@ -38,7 +38,7 @@ public class Edit_car extends JFrame implements ActionListener{
         this.d=d;
         this.cw=cw;
         createWindow();
-        edytuj.setText("Dodaj");
+        edytuj.setText("Dodaj samochod");
         usun.setVisible(false);
         wlasciciel.setVisible(false);
         nowySamochod=true;
@@ -67,6 +67,26 @@ public class Edit_car extends JFrame implements ActionListener{
         edytuj.addActionListener(this);
         wroc.addActionListener(this);
         usun.addActionListener(this);
+
+        wroc.setFont(wroc.getFont().deriveFont(20f));
+        edytuj.setFont(wroc.getFont().deriveFont(20f));
+        usun.setFont(wroc.getFont().deriveFont(20f));
+        wpiszMa.setFont(wroc.getFont().deriveFont(20f));
+        wpiszMo.setFont(wroc.getFont().deriveFont(20f));
+        wpiszP.setFont(wroc.getFont().deriveFont(20f));
+        wpiszRe.setFont(wroc.getFont().deriveFont(20f));
+        wpiszRo.setFont(wroc.getFont().deriveFont(20f));
+        rejestracja.setFont(wroc.getFont().deriveFont(20f));
+        model.setFont(wroc.getFont().deriveFont(20f));
+        marka.setFont(wroc.getFont().deriveFont(20f));
+        przebieg.setFont(wroc.getFont().deriveFont(20f));
+        rok.setFont(wroc.getFont().deriveFont(20f));
+        wlasciciel.setFont(wroc.getFont().deriveFont(17f));
+
+
+
+
+
         panel.setLayout(new GridLayout(0,2));
 
         panel.add(rejestracja);

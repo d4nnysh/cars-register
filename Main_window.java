@@ -1,7 +1,6 @@
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.*;
-import java.awt.Font;
 import java.awt.Dimension;
 import javax.swing.*;
 

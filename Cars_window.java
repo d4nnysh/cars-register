@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.awt.Dimension;
 
 
 
@@ -14,7 +15,7 @@ public class Cars_window extends JFrame implements ActionListener{
     private JPanel panel, top_panel, center_panel;
     private JScrollPane scroll;
     private JButton wroc, szukaj, dodaj, odswiez;
-    private JLabel wpisz= new JLabel("Wpisz rejestracje");
+    private JLabel wpisz= new JLabel("Wpisz rejestracje: ");
     private JTextField rejestracja= new JTextField();
     private Main_window mw;
 
@@ -46,6 +47,19 @@ public class Cars_window extends JFrame implements ActionListener{
             szukaj.addActionListener(this);
             dodaj.addActionListener(this);
             odswiez.addActionListener(this);
+
+            wroc.setPreferredSize(new Dimension(0, 60));
+            szukaj.setPreferredSize(new Dimension(0, 60));
+            dodaj.setPreferredSize(new Dimension(0, 60));
+            odswiez.setPreferredSize(new Dimension(0, 60));
+
+            wroc.setFont(wroc.getFont().deriveFont(25f));
+            szukaj.setFont(wroc.getFont().deriveFont(25f));
+            dodaj.setFont(wroc.getFont().deriveFont(20f));
+            odswiez.setFont(wroc.getFont().deriveFont(25f));
+            wpisz.setFont(wroc.getFont().deriveFont(20f));
+            rejestracja.setFont(wroc.getFont().deriveFont(25f));
+
 
             for (Car car : samochody) {
                 center_panel.add(new Car_cart(car, this));
@@ -121,6 +135,13 @@ public class Cars_window extends JFrame implements ActionListener{
             model=new JLabel("Model: "+s.getModel());
             rok=new JLabel("Rok: "+s.getRok());
             przebieg=new JLabel("Przebieg: "+s.getPrzebieg());
+            rejestracja.setFont(rejestracja.getFont().deriveFont(15f));
+            marka.setFont(rejestracja.getFont().deriveFont(15f));
+            model.setFont(rejestracja.getFont().deriveFont(15f));
+            rok.setFont(rejestracja.getFont().deriveFont(15f));
+            przebieg.setFont(rejestracja.getFont().deriveFont(15f));
+            edytuj.setFont(rejestracja.getFont().deriveFont(15f));
+
             this.setLayout(new GridLayout(1,0));
             this.add(rejestracja);
             this.add(marka);

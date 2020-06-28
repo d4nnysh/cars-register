@@ -3,7 +3,6 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
-import java.awt.Font;
 import java.awt.Dimension;
 
 
@@ -16,8 +15,8 @@ public class Drivers_window extends JFrame implements ActionListener{
     private JPanel panel, top_panel, center_panel;
     private JScrollPane scroll;
     private JButton wroc, szukaj, dodaj, odswiez;
-    private JLabel wpisz= new JLabel("Wpisz pesel");
-    private JTextField pesel= new JTextField("xxxxxx");
+    private JLabel wpisz= new JLabel("Wpisz pesel: ");
+    private JTextField pesel= new JTextField("");
     private Main_window mw;
 
     public Drivers_window(Db_connect d, Main_window mw){
@@ -35,7 +34,7 @@ public class Drivers_window extends JFrame implements ActionListener{
             top_panel = new JPanel();
             center_panel= new JPanel();
 
-            
+            top_panel.setLayout(new GridLayout(1,0));
             center_panel.setLayout(new BoxLayout(center_panel, 1));
 
             panel.setLayout(new BorderLayout());
@@ -49,7 +48,18 @@ public class Drivers_window extends JFrame implements ActionListener{
             dodaj.addActionListener(this);
             odswiez.addActionListener(this);
 
-            wroc.setPreferredSize(new Dimension(0, 80));
+            wroc.setPreferredSize(new Dimension(0, 60));
+            szukaj.setPreferredSize(new Dimension(0, 60));
+            dodaj.setPreferredSize(new Dimension(0, 60));
+            odswiez.setPreferredSize(new Dimension(0, 60));
+
+            wroc.setFont(wroc.getFont().deriveFont(25f));
+            szukaj.setFont(wroc.getFont().deriveFont(25f));
+            dodaj.setFont(wroc.getFont().deriveFont(20f));
+            odswiez.setFont(wroc.getFont().deriveFont(25f));
+            wpisz.setFont(wroc.getFont().deriveFont(25f));
+            pesel.setFont(wroc.getFont().deriveFont(25f));
+
 
 
             for (Driver driver : kierowcy) {

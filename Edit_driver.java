@@ -37,7 +37,7 @@ public class Edit_driver extends JFrame implements ActionListener{
         this.d=d;
         this.dw=dw;
         createWindow();
-        edytuj.setText("Dodaj");
+        edytuj.setText("Dodaj kierowce");
         usun.setVisible(false);
         samochody.setVisible(false);
         wybierzSamochod.setVisible(false);
@@ -77,6 +77,21 @@ public class Edit_driver extends JFrame implements ActionListener{
         usun.addActionListener(this);
         dodajS.addActionListener(this);
         usunS.addActionListener(this);
+
+        wroc.setFont(wroc.getFont().deriveFont(20f));
+        edytuj.setFont(wroc.getFont().deriveFont(20f));
+        usun.setFont(wroc.getFont().deriveFont(20f));
+        dodajS.setFont(wroc.getFont().deriveFont(20f));
+        usunS.setFont(wroc.getFont().deriveFont(20f));
+        wpiszP.setFont(wroc.getFont().deriveFont(20f));
+        wpiszI.setFont(wroc.getFont().deriveFont(20f));
+        wpiszN.setFont(wroc.getFont().deriveFont(20f));
+        samochody.setFont(wroc.getFont().deriveFont(20f));
+        wybierzSamochod.setFont(wroc.getFont().deriveFont(20f));
+        pesel.setFont(wroc.getFont().deriveFont(20f));
+        imie.setFont(wroc.getFont().deriveFont(20f));
+        nazwisko.setFont(wroc.getFont().deriveFont(20f));
+
         panel.setLayout(new GridLayout(0,2));
 
         panel.add(pesel);
