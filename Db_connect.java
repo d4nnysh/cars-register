@@ -34,17 +34,18 @@ public class Db_connect {
         con.setAutoCommit(false);
     }
     /**
-     * Funkcja zwracajaca najmiejszy przebieg samochodu w bazie danych
+     * Funkcja zwracajaca najwiekszy przebieg samochodu w bazie danych
      */
-    public int minPrzebieg() throws SQLException{
+    public int maxPrzebieg() throws SQLException{
         int p=0;
         stmt=con.createStatement();
-        query="SELECT MIN(przebieg) FROM cars;";
+        query="SELECT MAX(przebieg) FROM cars;";
         rs=stmt.executeQuery(query);
         while(rs.next()){
-            p=rs.getInt("MIN(przebieg)");
+            p=rs.getInt("MAX(przebieg)");
         }
         stmt.close();
+        rs.close();
         return p;
     }
     /**
@@ -59,6 +60,7 @@ public class Db_connect {
             w=rs.getInt("MIN(rok)");
         }
         stmt.close();
+        rs.close();
         return LocalDate.now().getYear()-w;
     }
     /**
@@ -73,6 +75,7 @@ public class Db_connect {
             p=rs.getInt("AVG(przebieg)");
         }
         stmt.close();
+        rs.close();
         return p;
     }
     /**
@@ -87,6 +90,7 @@ public class Db_connect {
             w=rs.getDouble("AVG(rok)");
         }
         stmt.close();
+        rs.close();
         return (double)LocalDate.now().getYear()-w;
     }
     /**
@@ -100,12 +104,14 @@ public class Db_connect {
         while(rs.next()){
             k=rs.getInt("COUNT(pesel)");
         }
+        rs.close();
         query="SELECT COUNT(rejestracja) FROM cars;";
         rs=stmt.executeQuery(query);
         while(rs.next()){
             s=rs.getInt("COUNT(rejestracja)");
         }
         stmt.close();
+        rs.close();
         return (double)s/k;
     }
     /**
@@ -120,6 +126,7 @@ public class Db_connect {
             samochody.add(new Car(rs.getString("rejestracja"), rs.getString("marka"), rs.getString("model"), rs.getInt("rok"), rs.getInt("przebieg")));
         }
         stmt.close();
+        rs.close();
         return samochody;
     }
     /**
@@ -134,6 +141,7 @@ public class Db_connect {
             kierowcy.add(new Driver(rs.getLong("pesel"), rs.getString("imie"), rs.getString("nazwisko")));
         }
         stmt.close();
+        rs.close();
         return kierowcy;
     }
     /**
@@ -155,7 +163,6 @@ public class Db_connect {
         stmt.executeUpdate(query);
         con.commit();
         stmt.close();
-
     }
     /**
      * Funkcja sluzaca do usuwania samochodu 
@@ -215,6 +222,7 @@ public class Db_connect {
            c=new Car(rs.getString("rejestracja"), rs.getString("marka"), rs.getString("model"), rs.getInt("rok"), rs.getInt("przebieg"));
         }
         stmt.close();
+        rs.close();
         return c;
     }    
     /**
@@ -229,6 +237,7 @@ public class Db_connect {
            d=new Driver(rs.getLong("pesel"), rs.getString("imie"), rs.getString("nazwisko"));
         }
         stmt.close();
+        rs.close();
         return d;
     }
     /**
@@ -243,6 +252,7 @@ public class Db_connect {
             samochody.add(rs.getString("rejestracja"));
         }
         stmt.close();
+        rs.close();
         return samochody;
     }
     /**
@@ -257,6 +267,7 @@ public class Db_connect {
             samochody.add(rs.getString("rejestracja"));
         }
         stmt.close();
+        rs.close();
         return samochody;
     }
     /**
@@ -291,6 +302,7 @@ public class Db_connect {
            x=rs.getLong("pesel");
         }
         stmt.close();
+        rs.close();
         return x;
     }
     /**
@@ -308,6 +320,7 @@ public class Db_connect {
             return false;
         }
         stmt.close();
+        rs.close();
         return true;
     }
     /**
@@ -324,6 +337,7 @@ public class Db_connect {
             return false;
         }
         stmt.close();
+        rs.close();
         return true;
     }
 }

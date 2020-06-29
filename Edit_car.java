@@ -131,7 +131,6 @@ public class Edit_car extends JFrame implements ActionListener{
                         Alert_window aw= new Alert_window(3);
                     }
                 } catch (Exception x) {
-                    x.printStackTrace();
                     Alert_window aw= new Alert_window(4);
                 }
             }

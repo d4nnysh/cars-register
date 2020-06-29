@@ -25,7 +25,7 @@ public class Main_window extends JFrame implements ActionListener{
             avgW=new JLabel("Sredni wiek pojazdu: "+d.avgWiek() +" lat");
             avgP=new JLabel("Sredni przebieg pojazdu: "+d.avgPrzebieg()+ " km");
             maxW=new JLabel("Najstarszy pojazd : "+d.maxWiek()+ " lat");
-            maxP=new JLabel("Najwiekszy przebieg pojazdu: "+d.avgPrzebieg()+" km");
+            maxP=new JLabel("Najwiekszy przebieg pojazdu: "+d.maxPrzebieg()+" km");
             avgSpK=new JLabel("Srednio pojazdow na kierowce: "+d.avgCarsPerDriver());
 
             stat.setFont(stat.getFont().deriveFont(64f));
