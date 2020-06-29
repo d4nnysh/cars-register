@@ -131,6 +131,7 @@ public class Edit_driver extends JFrame implements ActionListener{
                         Alert_window aw= new Alert_window(1);
                     }
                 } catch (Exception x) {
+                    x.printStackTrace();
                     Alert_window aw= new Alert_window(1);
                 }                
             }
